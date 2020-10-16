@@ -20,5 +20,8 @@ Rails.application.routes.draw do
     post "/offers" => "offers#create"
     patch "/offers/:id" => "offers#update"
     delete "/offers/:id" => "offers#destroy"
+
+    get "/tags" => "tags#index"
+    get "/tags/:id" => "tags#show"
   end
 end
