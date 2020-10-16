@@ -1,0 +1,8 @@
+{
+  id: post.id,
+  plant_type: post.plant_type,
+  trade_for: post.trade_for,
+  description: post.description,
+  location: post.location,
+  image_url: post.image_url,
+}
