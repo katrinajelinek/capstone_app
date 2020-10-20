@@ -1,1 +1,7 @@
-render partial: "post.json.jb", locals: { post: @post }
+post = render partial: "post.json.jb", locals: { post: @post }
+
+post[:offers] = @post.offers.map do |offer|
+  render partial: "/api/offers/offer.json.jb", locals: { offer: offer }
+end
+
+post

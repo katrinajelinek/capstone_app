@@ -1,7 +1,1 @@
-{
-  id: @offer.id,
-  post_id: @offer.post_id,
-  user_id: @offer.user_id,
-  message: @offer.message,
-  image_url: @offer.image_url,
-}
+render partial: "offer.json.jb", locals: { offer: @offer }

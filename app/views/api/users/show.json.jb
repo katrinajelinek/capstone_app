@@ -1,5 +1,11 @@
-{
-  first_name: @user.first_name,
-  last_name: @user.last_name,
-  email: @user.email,
-}
+user = render partial: "user.json.jb", locals: { user: @user }
+
+user[:posts] = @user.posts.map do |post|
+  render partial: "/api/posts/post.json.jb", locals: { post: post }
+end
+
+user[:offers] = @user.offers.map do |offer|
+  render partial: "/api/offers/offer.json.jb", locals: { offer: offer }
+end
+
+user
