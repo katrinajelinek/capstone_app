@@ -17,7 +17,7 @@ class Api::PostsController < ApplicationController
     )
     if @post.save
       eval(params[:tag_ids]).each do |tag_id|
-        PostTags.create(post_id: @post.id, tag_id: tag_id)
+        PostTag.create(post_id: @post.id, tag_id: tag_id)
       end
       render "show.json.jb"
     else
@@ -42,7 +42,7 @@ class Api::PostsController < ApplicationController
       @post.post_tags.destroy_all
       #remove eval on frontend build
       eval(params[:tag_ids]).each do |tag_id|
-        PostTags.create(post_id: @post.id, tag_id: tag_id)
+        PostTag.create(post_id: @post.id, tag_id: tag_id)
       end
       render "show.json.jb"
     else
