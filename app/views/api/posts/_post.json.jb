@@ -5,7 +5,5 @@
   description: post.description,
   location: post.location,
   image_url: post.image_url,
-  tags: post.tags.map do |tag|
-    render partial: "/api/tags/tag.json.jb", locals: { tag: tag }
-  end,
+  user_id: post.user_id,
 }

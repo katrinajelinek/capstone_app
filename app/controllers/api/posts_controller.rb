@@ -13,9 +13,12 @@ class Api::PostsController < ApplicationController
       description: params[:description],
       location: params[:location],
       image_url: params[:image_url],
-      user_id: params[:user_id],
+      user_id: current_user.id,
     )
     if @post.save
+      eval(params[:tag_ids]).each do |tag_id|
+        PostTags.create(post_id: @post.id, tag_id: tag_id)
+      end
       render "show.json.jb"
     else
       render json: { errors: @post.errors.full_messages }
@@ -34,7 +37,13 @@ class Api::PostsController < ApplicationController
     @post.description = params[:description] || @post.description
     @post.location = params[:location] || @post.location
     @post.image_url = params[:image_url] || @post.image_url
+
     if @post.save
+      @post.post_tags.destroy_all
+      #remove eval on frontend build
+      eval(params[:tag_ids]).each do |tag_id|
+        PostTags.create(post_id: @post.id, tag_id: tag_id)
+      end
       render "show.json.jb"
     else
       render json: { errors: @post.errors.full_messages }
