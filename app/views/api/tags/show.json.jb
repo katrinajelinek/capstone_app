@@ -1,1 +1,5 @@
-render partial: "tag.json.jb", locals: { tag: @tag }
+tag = render partial: "tag.json.jb", locals: { tag: @tag }
+tag[:posts] = @tag.posts.map do |post|
+  render partial: "/api/posts/post.json.jb", locals: { post: post }
+end
+tag
