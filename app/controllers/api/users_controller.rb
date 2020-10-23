@@ -8,7 +8,7 @@ class Api::UsersController < ApplicationController
       email: params[:email],
       password: params[:password],
       password_confirmation: params[:password_confirmation],
-      image: params[:image],
+      image_url: params[:image_url],
     )
     if @user.save
       render "show.json.jb"
@@ -29,7 +29,7 @@ class Api::UsersController < ApplicationController
     @user.email = params[:email] || @user.email
     @user.password = params[:password] || @user.password
     @user.password_confirmation = params[:password_confirmation] || @user.password_confirmation
-    @user.image = params[:image] || @user.image
+    @user.image_url = params[:image_url] || @user.image_url
     if @user.save
       render "show.json.jb"
     else
