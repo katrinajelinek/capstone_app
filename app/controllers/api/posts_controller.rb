@@ -16,12 +16,14 @@ class Api::PostsController < ApplicationController
       user_id: current_user.id,
     )
     if @post.save
-      eval(params[:tag_ids]).each do |tag_id|
-        PostTag.create(post_id: @post.id, tag_id: tag_id)
+      if params[:tag_ids]
+        eval(params[:tag_ids]).each do |tag_id|
+          PostTag.create(post_id: @post.id, tag_id: tag_id)
+        end
       end
       render "show.json.jb"
     else
-      render json: { errors: @post.errors.full_messages }
+      render json: { errors: @post.errors.full_messages }, status: 422
     end
   end
 
@@ -39,14 +41,16 @@ class Api::PostsController < ApplicationController
     @post.image_url = params[:image_url] || @post.image_url
 
     if @post.save
-      @post.post_tags.destroy_all
-      #remove eval on frontend build
-      eval(params[:tag_ids]).each do |tag_id|
-        PostTag.create(post_id: @post.id, tag_id: tag_id)
+      if params[:tag_ids]
+        @post.post_tags.destroy_all
+        #remove eval on frontend build
+        eval(params[:tag_ids]).each do |tag_id|
+          PostTag.create(post_id: @post.id, tag_id: tag_id)
+        end
       end
       render "show.json.jb"
     else
-      render json: { errors: @post.errors.full_messages }
+      render json: { errors: @post.errors.full_messages }, status: 422
     end
   end
 

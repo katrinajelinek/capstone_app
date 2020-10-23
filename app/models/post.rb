@@ -3,4 +3,6 @@ class Post < ApplicationRecord
   has_many :tags, through: :post_tags
   has_many :offers, dependent: :destroy
   belongs_to :user
+
+  validates :plant_type, presence: true
 end

@@ -1,4 +1,5 @@
 {
+  id: tag.id,
   name: tag.name,
   image_url: tag.image_url,
 }

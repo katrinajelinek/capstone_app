@@ -4,14 +4,14 @@ class Api::OffersController < ApplicationController
   def create
     @offer = Offer.new(
       post_id: params[:post_id],
-      user_id: params[:user_id],
+      user_id: current_user.id,
       message: params[:message],
       image_url: params[:image_url],
     )
     if @offer.save
       render "show.json.jb"
     else
-      render json: { errors: @offer.errors.full_messages }
+      render json: { errors: @offer.errors.full_messages }, status: 422
     end
   end
 
@@ -22,7 +22,7 @@ class Api::OffersController < ApplicationController
     if @offer.save
       render "show.json.jb"
     else
-      render json: { errors: @offer.errors.full_messages }
+      render json: { errors: @offer.errors.full_messages }, status: 422
     end
   end
 

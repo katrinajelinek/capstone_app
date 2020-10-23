@@ -1,1 +1,3 @@
-render partial: "offer.json.jb", locals: { offer: @offer }
+offer = render partial: "offer.json.jb", locals: { offer: @offer }
+offer[:user] = render partial: "/api/users/user.json.jb", locals: { user: @offer.user }
+offer
