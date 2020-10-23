@@ -2,5 +2,5 @@ class Offer < ApplicationRecord
   belongs_to :post
   belongs_to :user
 
-  validates :message, presence: true
+  validates :message, length: { in: 10..50 }
 end

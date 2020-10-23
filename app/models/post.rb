@@ -5,4 +5,6 @@ class Post < ApplicationRecord
   belongs_to :user
 
   validates :plant_type, presence: true
+  validates :location, presence: true
+  validates :description, length: { maximum: 100 }
 end
