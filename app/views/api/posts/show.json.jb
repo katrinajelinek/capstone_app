@@ -6,6 +6,7 @@ end
 
 post[:offers] = @post.offers.map do |offer|
   render partial: "/api/offers/offer.json.jb", locals: { offer: offer }
+  # offer[:user] = render partial: "/api/users/user.json.jb", locals: { user: @offer.user }
 end
 
 post

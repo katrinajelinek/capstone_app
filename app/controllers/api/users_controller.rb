@@ -29,15 +29,21 @@ class Api::UsersController < ApplicationController
       @user.last_name = params[:last_name] || @user.last_name
       @user.email = params[:email] || @user.email
       if params[:password]
-        @user.password = params[:password]
-        @user.password_confirmation = params[:password_confirmation]
+        if @user.authenticate(params[:old_password])
+          @user.update!(
+            password: params[:password],
+            password_confirmation: params[:password_confirmation],
+          )
+        end
       end
       @user.image_url = params[:image_url] || @user.image_url
-    end
-    if @user.save
-      render "show.json.jb"
+      if @user.save
+        render "show.json.jb"
+      else
+        render json: { errors: @user.errors.full_messages }, status: 422
+      end
     else
-      render json: { errors: @user.errors.full_messages }, status: 422
+      render json: {}, status: :forbidden
     end
   end
 
