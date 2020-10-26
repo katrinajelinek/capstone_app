@@ -5,8 +5,9 @@ post[:tags] = @post.tags.map do |tag|
 end
 
 post[:offers] = @post.offers.map do |offer|
-  render partial: "/api/offers/offer.json.jb", locals: { offer: offer }
-  # offer[:user] = render partial: "/api/users/user.json.jb", locals: { user: @offer.user }
+  offer_info = render partial: "/api/offers/offer.json.jb", locals: { offer: offer }
+  offer_info[:user] = render partial: "/api/users/user.json.jb", locals: { user: offer.user }
+  offer_info
 end
 
 post
