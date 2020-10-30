@@ -17,7 +17,7 @@ class Api::PostsController < ApplicationController
     )
     if @post.save
       if params[:tag_ids]
-        eval(params[:tag_ids]).each do |tag_id|
+        params[:tag_ids].each do |tag_id|
           PostTag.create(post_id: @post.id, tag_id: tag_id)
         end
       end
