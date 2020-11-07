@@ -35,20 +35,26 @@ class Api::PostsController < ApplicationController
   end
 
   def update
-    response = Cloudinary::Uploader.upload(params[:image])
-    cloudinary_url = response["secure_url"]
+    if params[:image]
+      response = Cloudinary::Uploader.upload(params[:image])
+      cloudinary_url = response["secure_url"]
+    end
     @post = Post.find(params[:id])
     @post.plant_type = params[:plant_type] || @post.plant_type
     @post.trade_for = params[:trade_for] || @post.trade_for
     @post.description = params[:description] || @post.description
     @post.location = params[:location] || @post.location
-    @post.image_url = cloudinary_url || @post.image_url
+    if cloudinary_url
+      @post.image_url = cloudinary_url
+    else
+      @post.image_url
+    end
 
     if @post.save
       if params[:tag_ids]
         @post.post_tags.destroy_all
         #remove eval on frontend build
-        (params[:tag_ids]).each do |tag_id|
+        eval(params[:tag_ids]).each do |tag_id|
           PostTag.create(post_id: @post.id, tag_id: tag_id)
         end
       end
