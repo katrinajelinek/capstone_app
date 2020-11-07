@@ -2,8 +2,10 @@ class Api::OffersController < ApplicationController
   before_action :authenticate_user
 
   def create
-    response = Cloudinary::Uploader.upload(params[:image])
-    cloudinary_url = response["secure_url"]
+    if params[:image]
+      response = Cloudinary::Uploader.upload(params[:image])
+      cloudinary_url = response["secure_url"]
+    end
     @offer = Offer.new(
       post_id: params[:post_id],
       user_id: current_user.id,
@@ -18,8 +20,10 @@ class Api::OffersController < ApplicationController
   end
 
   def update
-    response = Cloudinary::Uploader.upload(params[:image])
-    cloudinary_url = response["secure_url"]
+    if params[:image]
+      response = Cloudinary::Uploader.upload(params[:image])
+      cloudinary_url = response["secure_url"]
+    end
     @offer = Offer.find(params[:id])
     @offer.message = params[:message] || @offer.message
     @offer.image_url = cloudinary_url || @offer.image_url

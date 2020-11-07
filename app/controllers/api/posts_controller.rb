@@ -7,8 +7,10 @@ class Api::PostsController < ApplicationController
   end
 
   def create
-    response = Cloudinary::Uploader.upload(params[:image])
-    cloudinary_url = response["secure_url"]
+    if params[:image]
+      response = Cloudinary::Uploader.upload(params[:image])
+      cloudinary_url = response["secure_url"]
+    end
     @post = Post.new(
       plant_type: params[:plant_type],
       trade_for: params[:trade_for],
@@ -19,7 +21,7 @@ class Api::PostsController < ApplicationController
     )
     if @post.save
       if params[:tag_ids]
-        params[:tag_ids].each do |tag_id|
+        eval(params[:tag_ids]).each do |tag_id|
           PostTag.create(post_id: @post.id, tag_id: tag_id)
         end
       end
@@ -44,11 +46,7 @@ class Api::PostsController < ApplicationController
     @post.trade_for = params[:trade_for] || @post.trade_for
     @post.description = params[:description] || @post.description
     @post.location = params[:location] || @post.location
-    if cloudinary_url
-      @post.image_url = cloudinary_url
-    else
-      @post.image_url
-    end
+    @post.image_url = cloudinary_url || @post.image_url
 
     if @post.save
       if params[:tag_ids]

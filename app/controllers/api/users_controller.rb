@@ -2,8 +2,10 @@ class Api::UsersController < ApplicationController
   before_action :authenticate_user, except: [:show, :create]
 
   def create
-    response = Cloudinary::Uploader.upload(params[:image])
-    cloudinary_url = response["secure_url"]
+    if params[:image]
+      response = Cloudinary::Uploader.upload(params[:image])
+      cloudinary_url = response["secure_url"]
+    end
     @user = User.new(
       first_name: params[:first_name],
       last_name: params[:last_name],
@@ -25,8 +27,10 @@ class Api::UsersController < ApplicationController
   end
 
   def update
-    response = Cloudinary::Uploader.upload(params[:image])
-    cloudinary_url = response["secure_url"]
+    if params[:image]
+      response = Cloudinary::Uploader.upload(params[:image])
+      cloudinary_url = response["secure_url"]
+    end
     @user = User.find(params[:id])
     if @user == current_user
       @user.first_name = params[:first_name] || @user.first_name
