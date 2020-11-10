@@ -4,4 +4,5 @@
   user_id: offer.user_id,
   message: offer.message,
   image_url: offer.image_url,
+  accepted: offer.accepted,
 }

@@ -27,6 +27,7 @@ class Api::OffersController < ApplicationController
     @offer = Offer.find(params[:id])
     @offer.message = params[:message] || @offer.message
     @offer.image_url = cloudinary_url || @offer.image_url
+    @offer.accepted = params[:accepted] || @offer.accepted
     if @offer.save
       render "show.json.jb"
     else
