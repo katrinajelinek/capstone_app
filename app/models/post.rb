@@ -7,4 +7,8 @@ class Post < ApplicationRecord
   validates :plant_type, presence: true
   validates :location, presence: true
   validates :description, length: { maximum: 100 }
+
+  def offer_accepted?
+    offers.find_by(accepted: true)
+  end
 end
