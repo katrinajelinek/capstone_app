@@ -33,7 +33,6 @@ class Api::PostsController < ApplicationController
 
   def show
     @post = Post.find(params[:id])
-    @post.offer_accepted?
     render "show.json.jb"
   end
 

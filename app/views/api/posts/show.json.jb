@@ -12,4 +12,6 @@ post[:offers] = @post.offers.map do |offer|
   offer_info
 end
 
+post[:offer_accepted] = @post.offer_accepted?
+
 post
