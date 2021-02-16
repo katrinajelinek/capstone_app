@@ -24,4 +24,5 @@ Rails.application.routes.draw do
     get "/tags" => "tags#index"
     get "/tags/:id" => "tags#show"
   end
+  get "/*path" => proc { [200, {}, [ActionView::Base.new.render(file: "public/index.html")]] }
 end
